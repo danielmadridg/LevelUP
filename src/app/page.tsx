@@ -96,8 +96,9 @@ export default function Home() {
       <section className="panel-paper" style={{ borderRadius: '2px', position: 'relative' }}>
         {/* Decorative 'tape' or visual anchor */}
         <div style={{ 
-            position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', 
-            width: '120px', height: '20px', background: 'rgba(255,255,255,0.4)', transform: 'rotate(-2deg)' 
+            position: 'absolute', top: '-10px', left: '50%',
+            width: '120px', height: '20px', background: 'rgba(255,255,255,0.4)', transform: 'translateX(-50%) rotate(-2deg)'
+
         }}></div>
 
         <h2 style={{ 

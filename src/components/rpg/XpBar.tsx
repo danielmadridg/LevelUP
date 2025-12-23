@@ -27,7 +27,8 @@ export function XpBar({ current, max, label, color }: XpBarProps) {
           style={{ backgroundColor: color }} // Override color if provided
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
-          transition={{ duration: 0.5, steps: 10 }} // Stepped animation for retro feel?
+          transition={{ duration: 0.5, ease: "linear" }} // Stepped animation removed for Type safety
+
         />
       </div>
     </div>

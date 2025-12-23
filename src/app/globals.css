@@ -1,0 +1,119 @@
+:root {
+  /* Cozy Village Palette */
+  
+  /* Backgrounds: Warm Earthy Tones */
+  --bg-main: #92e8c0;   /* Soft Grass Green - Main World Background */
+  --bg-surface: #f4e4bc; /* Parchment/Beige - UI Elements */
+  --bg-wood: #8b5a2b;    /* Wood - Borders/Containers */
+  
+  /* Text: Deep Browns for high legibility on light backgrounds */
+  --text-primary: #3e2723; 
+  --text-secondary: #5d4037;
+  --text-muted: #8d6e63;
+
+  /* Stats/Accents - Soft but readable */
+  --color-xp: #ffd700;       /* Warm Gold */
+  --color-str: #d95763;      /* Brick Red (Roofs) */
+  --color-int: #5b6ee1;      /* Deep Calm Blue (Water) */
+  --color-cha: #e06f8b;      /* Soft Rose */
+  --color-wil: #a0504d;      /* Earthy Violet/Brown */
+  
+  --border-color: #5d4037;   /* Dark Brown borders */
+  --border-highlight: #fff8e1; /* Light edge for 3D effect */
+  
+  /* Pixel Art Specifics */
+  --border-width: 4px;
+  --font-pixel: 'Pixelify Sans', cursive;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-main);
+  /* Isometric Grass Pattern Effect */
+  background-image: 
+    linear-gradient(45deg, #8bdba8 25%, transparent 25%, transparent 75%, #8bdba8 75%, #8bdba8),
+    linear-gradient(45deg, #8bdba8 25%, transparent 25%, transparent 75%, #8bdba8 75%, #8bdba8);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  
+  color: var(--text-primary);
+  font-family: var(--font-pixel);
+  -webkit-font-smoothing: none; 
+  image-rendering: pixelated;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Wood Board / Panel Container Style */
+.panel-wood {
+  background-color: var(--bg-wood);
+  border: 4px solid #3e2723;
+  box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+  color: #fff8e1; /* Light text on wood */
+  padding: 1rem;
+  position: relative;
+}
+
+/* Paper / Parchment Style */
+.panel-paper {
+  background-color: var(--bg-surface);
+  border: 4px solid var(--text-primary);
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+  color: var(--text-primary);
+}
+
+.pixel-btn {
+  background: var(--color-int);
+  color: white;
+  border: 4px solid #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #2a3c90; /* Darker blue shadow */
+  active: translate(0, 4px);
+  active: shadow(none);
+}
+
+/* Utilities */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+
+.text-xp { color: #d08d00; font-weight: bold; } /* Darker gold for comparison text on light bg */
+.font-bold { font-weight: 700; }
+
+/* Scrollbar - Wood style */
+::-webkit-scrollbar {
+  width: 14px;
+}
+::-webkit-scrollbar-track {
+  background: #5d4037;
+}
+::-webkit-scrollbar-thumb {
+  background: #8b5a2b;
+  border: 2px solid #fff8e1;
+}

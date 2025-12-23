@@ -1,0 +1,52 @@
+.card {
+  background-color: var(--bg-surface); /* Parchment look */
+  border: 4px solid var(--text-primary); /* Dark Brown Border */
+  border-radius: 2px; /* Slight rounding for softness */
+  padding: 1rem;
+  box-shadow: 4px 4px 0px rgba(62, 39, 35, 0.2); /* Soft brown shadow */
+  transition: transform 0.1s;
+  cursor: pointer;
+  image-rendering: pixelated;
+  position: relative;
+  
+  /* Corner flourish detail (optional css trick can go here, keeping simple for now) */
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  background-color: #fffbf0; /* Lighter parchment on hover */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px dashed #bcaaa4; /* Light brown dashed line */
+  padding-bottom: 0.5rem;
+}
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  /* Icon container looking like a stamp */
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.level {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}

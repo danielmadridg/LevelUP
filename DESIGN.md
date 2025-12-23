@@ -12,9 +12,9 @@
 
 ### Backend & Database
 
-- **Serverless Architecture (Next.js API Routes / Server Actions)**: Simplifies deployment and scaling. No need to manage a separate backend server.
-- **Prisma ORM**: Type-safe database access. Excellent migration system and intuitive schema definition.
-- **PostgreSQL**: Robust, relational database ideal for structured data (Users -> Logs -> Stats).
+- **Serverless Architecture (Next.js API Routes / Server Actions)**: Simplifies deployment and scaling.
+- **Firebase Firestore**: NoSQL Document Database. Replaced Postgres for simpler scaling and full Firebase ecosystem integration.
+- **Authentication**: Auth.js with **Firestore Adapter**.
 - **Zod**: Schema validation for both frontend forms and backend API inputs.
 
 ## 2. Architecture Overview
@@ -26,85 +26,33 @@
   - **Mutate**: Server Actions handle data mutations (add log, update stats).
   - **State**: Client context (Zustand) mirrors critical user stats for instant feedback/animations.
 
-## 3. Data Model (PostgreSQL via Prisma)
+## 3. Data Model (Firestore Document Structure)
 
-```prisma
-// This is a preliminary schema plan
-
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  image         String?
-  createdAt     DateTime  @default(now())
-
-  // RPG Stats
-  level         Int       @default(1)
-  xp            Int       @default(0)
-  xpNextLevel   Int       @default(100) // Can be calculated dynamically, but storing helps query speed?
-                                          // Better: Calculate in app, store only XP.
-
-  // Relations
-  stats         UserStat[]
-  logs          ActivityLog[]
-  achievements  UserAchievement[]
+```json
+// Collection: users
+{
+  "uid": "user_abc123",
+  "name": "Player 1",
+  "email": "player@example.com",
+  "image": "https://...",
+  "level": 1,
+  "xp": 0,
+  "createdAt": "Timestamp"
 }
 
-model Stat {
-  id          String    @id @default(cuid())
-  name        String    // e.g. "Strength", "Intellect", "Charisma"
-  description String?
-  color       String    // Hex code for UI
-  icon        String    // Icon identifier
-
-  users       UserStat[]
+// Sub-collection: users/{uid}/logs
+{
+  "id": "log_xyz",
+  "activity": "Gym",
+  "xpGained": 100,
+  "createdAt": "Timestamp"
 }
 
-model UserStat {
-  id        String   @id @default(cuid())
-  userId    String
-  statId    String
-  level     Int      @default(1)
-  xp        Int      @default(0)
-
-  user      User     @relation(fields: [userId], references: [id])
-  stat      Stat     @relation(fields: [statId], references: [id])
-
-  @@unique([userId, statId])
-}
-
-model ActivityLog {
-  id          String   @id @default(cuid())
-  userId      String
-  description String
-  xpGained    Int
-  createdAt   DateTime @default(now())
-
-  // Optional: Link to a specific skill/stat if the activity boosted it
-  statId      String?
-
-  user        User     @relation(fields: [userId], references: [id])
-}
-
-model Achievement {
-  id          String   @id @default(cuid())
-  slug        String   @unique // e.g., "early_bird"
-  name        String
-  description String
-  xpReward    Int
-
-  users       UserAchievement[]
-}
-
-model UserAchievement {
-  userId        String
-  achievementId String
-  unlockedAt    DateTime @default(now())
-
-  user          User        @relation(fields: [userId], references: [id])
-  achievement   Achievement @relation(fields: [achievementId], references: [id])
-
-  @@id([userId, achievementId])
+// Sub-collection: users/{uid}/stats
+{
+  "id": "stat_strength",
+  "level": 5,
+  "xp": 250
 }
 ```
 

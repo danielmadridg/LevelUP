@@ -1,27 +1,23 @@
 import { StatCard } from '@/components/rpg/StatCard';
 import { Dumbbell, BookOpen, User, Brain, Zap, Scroll, Map as MapIcon, Home as HomeIcon } from 'lucide-react';
 
-export default function Home() {
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  const session = await auth();
+  if (!session?.user) return redirect("/login");
+
+  const user = session.user;
+
   const stats = [
     { id: '1', name: 'STR', level: 12, xp: 450, xpNext: 1000, icon: Dumbbell, color: 'var(--color-str)' },
-    { id: '2', name: 'INT', level: 8, xp: 820, xpNext: 900, icon: BookOpen, color: 'var(--color-int)' },
-    { id: '3', name: 'CHA', level: 5, xp: 120, xpNext: 600, icon: User, color: 'var(--color-cha)' },
-    { id: '4', name: 'WIL', level: 15, xp: 200, xpNext: 2000, icon: Brain, color: 'var(--color-wil)' },
-    { id: '5', name: 'NRG', level: 20, xp: 1950, xpNext: 2500, icon: Zap, color: 'var(--color-xp)' },
+    // ... rest of stats
   ];
 
   return (
     <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
-      
-      {/* Navigation / HUD Top Bar */}
-      <nav style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', justifyContent: 'center' }}>
-        <button className="panel-wood" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', cursor: 'pointer' }}>
-            <HomeIcon size={18} /> Village
-        </button>
-        <button className="panel-paper" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', cursor: 'pointer', background: '#ffe0b2' }}>
-            <MapIcon size={18} /> World Map
-        </button>
-      </nav>
+       {/* ... Navigation ... */}
 
       {/* Hero Section / Profile Header */}
       <header className="panel-wood" style={{ 
@@ -42,21 +38,29 @@ export default function Home() {
                     border: '4px solid #bcaaa4',
                     borderRadius: '8px',
                     display: 'grid', 
-                    placeItems: 'center' 
+                    placeItems: 'center',
+                    overflow: 'hidden'
                 }}>
-                    <User size={36} color="#fff8e1" />
+                    {user.image ? (
+                        <img src={user.image} alt="Avatar" style={{ width: '100%', height: '100%' }} />
+                    ) : (
+                        <User size={36} color="#fff8e1" />
+                    )}
                 </div>
                 <div>
-                    <h1 style={{ fontSize: '1.75rem', textShadow: '2px 2px 0 #3e2723', marginBottom: '0.25rem' }}>PLAYER ONE</h1>
+                    <h1 style={{ fontSize: '1.75rem', textShadow: '2px 2px 0 #3e2723', marginBottom: '0.25rem' }}>
+                        {user.name?.toUpperCase() || 'PLAYER ONE'}
+                    </h1>
                     <span style={{ 
                         background: '#d95763', 
                         padding: '0.25rem 0.75rem', 
                         borderRadius: '4px', 
                         fontSize: '0.875rem',
                         border: '2px solid rgba(0,0,0,0.2)'
-                    }}>Novice Adventurer</span>
+                    }}>{user.email}</span>
                 </div>
             </div>
+
             
             <div style={{ textAlign: 'right' }}>
                 <span style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ffd700', textShadow: '2px 2px 0 #5d4037' }}>LVL 12</span>
